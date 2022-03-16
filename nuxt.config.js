@@ -61,7 +61,8 @@ export default {
           user: { url: '/me', method: 'get' }
         }
       }
-    }
+    },
+    plugins: ['~/plugins/auth.ts']
   },
 
   router: {
