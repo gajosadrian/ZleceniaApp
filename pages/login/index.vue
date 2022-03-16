@@ -8,10 +8,7 @@
       Brak połączenia z internetem
     </b-alert>
 
-    <div>{{ $auth.loggedIn }}</div>
-    <div>{{ $auth.user }}</div>
-
-    <b-form @submit.prevent="login">
+    <b-form v-if="$nuxt.isOnline" @submit.prevent="login">
       <b-form-group label="Login">
         <b-input v-model="form.email" name="login" size="lg" required />
       </b-form-group>
@@ -47,6 +44,7 @@
         block
       >
         <b-icon icon="wifi-off" />
+        <span v-if="$nuxt.isOffline">Zaloguj</span>
         Offline
       </b-button>
     </b-form-group>

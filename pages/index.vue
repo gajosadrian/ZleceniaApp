@@ -57,6 +57,7 @@
       </b-tbody>
     </b-table-simple>
     <b-button @click="logout">Logout</b-button>
+    <b-button @click="test">test</b-button>
   </div>
 </template>
 
@@ -67,6 +68,22 @@ import { Vue, Component } from 'vue-property-decorator'
 export default class LoginPage extends Vue {
   async logout() {
     await this.$auth.logout()
+  }
+
+  async test() {
+    try {
+      await this.$axios.get('/me')
+      this.$swal({
+        title: 'Success',
+        icon: 'success'
+      })
+    } catch (e: any) {
+      this.$swal({
+        title: 'Error',
+        text: e.message,
+        icon: 'error'
+      })
+    }
   }
 }
 </script>
