@@ -1,9 +1,9 @@
 <template>
   <div>
     <hr class="mt-5" />
-    <div class="d-flex justify-content-between text-muted">
+    <div class="d-flex justify-content-between text-muted mb-3">
       <div>
-        Kontakt z administratorem:
+        Kontakt do admina:
         <a :href="`tel:${adminTel}`">{{ adminTel }}</a>
       </div>
       <div>v{{ $nuxt.$config.clientVersion }}</div>

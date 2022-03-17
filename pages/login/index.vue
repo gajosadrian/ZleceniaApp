@@ -35,19 +35,19 @@
       </b-form-group>
     </b-form>
 
-    <b-form-group>
-      <b-button
-        :disabled="sending.login"
-        variant="danger"
-        type="submit"
-        size="lg"
-        block
-      >
-        <b-icon icon="wifi-off" />
-        <span v-if="$nuxt.isOffline">Zaloguj</span>
-        Offline
-      </b-button>
-    </b-form-group>
+    <!--    <b-form-group>-->
+    <!--      <b-button-->
+    <!--        :disabled="sending.login"-->
+    <!--        variant="danger"-->
+    <!--        type="submit"-->
+    <!--        size="lg"-->
+    <!--        block-->
+    <!--      >-->
+    <!--        <b-icon icon="wifi-off" />-->
+    <!--        <span v-if="$nuxt.isOffline">Zaloguj</span>-->
+    <!--        Offline-->
+    <!--      </b-button>-->
+    <!--    </b-form-group>-->
   </div>
 </template>
 
