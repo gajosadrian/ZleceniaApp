@@ -2,6 +2,7 @@
   <main>
     <div class="container">
       <Nuxt />
+      <PageFooter />
     </div>
   </main>
 </template>

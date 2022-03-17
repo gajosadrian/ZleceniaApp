@@ -1,4 +1,11 @@
+import pkg from './package.json'
+
 export default {
+  // https://nuxtjs.org/guide/runtime-config
+  publicRuntimeConfig: {
+    clientVersion: pkg.version
+  },
+
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
 
@@ -49,7 +56,8 @@ export default {
           property: 'token',
           global: true,
           required: true,
-          type: 'Bearer'
+          type: 'Bearer',
+          maxAge: 60 * 60 * 24 * 365
         },
         user: {
           property: 'user',

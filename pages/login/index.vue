@@ -48,11 +48,6 @@
         Offline
       </b-button>
     </b-form-group>
-
-    <hr class="mt-5" />
-    <div class="text-muted">
-      Kontakt z administratorem: <a :href="`tel:${adminTel}`">{{ adminTel }}</a>
-    </div>
   </div>
 </template>
 
