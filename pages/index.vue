@@ -57,12 +57,17 @@
       </b-tbody>
     </b-table-simple>
     <b-button @click="logout">Logout</b-button>
+    <b-button @click="fetchUser">fetchUser</b-button>
     <b-button @click="test">test</b-button>
+    <div>
+      {{ tests }}
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
+import Test from '@/models/Test'
 
 @Component
 export default class LoginPage extends Vue {
@@ -70,7 +75,7 @@ export default class LoginPage extends Vue {
     await this.$auth.logout()
   }
 
-  async test() {
+  async fetchUser() {
     try {
       await this.$axios.get('/me')
       this.$swal({
@@ -84,6 +89,19 @@ export default class LoginPage extends Vue {
         icon: 'error'
       })
     }
+  }
+
+  get tests() {
+    return Test.all()
+  }
+
+  test() {
+    Test.insert({
+      data: {
+        id: 2,
+        name: 'test'
+      }
+    })
   }
 }
 </script>
