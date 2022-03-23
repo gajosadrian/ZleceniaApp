@@ -1,7 +1,7 @@
 import { Model } from '@vuex-orm/core'
 
-export default class User extends Model {
-  static entity = 'users'
+export default class Test extends Model {
+  static entity = 'tests'
 
   static fields() {
     return {

@@ -58,16 +58,15 @@
     </b-table-simple>
     <b-button @click="logout">Logout</b-button>
     <b-button @click="fetchUser">fetchUser</b-button>
-    <b-button @click="test">test</b-button>
-    <div>
-      {{ tests }}
-    </div>
+    <div>{{ schedule }}</div>
+    <div>{{ events }}</div>
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import Test from '@/models/Test'
+import Schedule from '~/models/Schedule'
+import Event from '~/models/Event'
 
 @Component
 export default class LoginPage extends Vue {
@@ -91,17 +90,16 @@ export default class LoginPage extends Vue {
     }
   }
 
-  get tests() {
-    return Test.all()
+  get schedule() {
+    return Schedule.query().with('events').first()
   }
 
-  test() {
-    Test.insert({
-      data: {
-        id: 2,
-        name: 'test'
-      }
-    })
+  get events() {
+    return Event.all()
+  }
+
+  mounted() {
+    Schedule.fetch({ dateString: '2022-03-23' })
   }
 }
 </script>
