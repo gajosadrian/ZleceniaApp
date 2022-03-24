@@ -15,7 +15,7 @@
       "~/*": ["./*"],
       "@/*": ["./*"]
     },
-    "types": ["@nuxt/types", "@types/node", "@nuxtjs/axios", "@nuxtjs/auth-next", "vue-sweetalert2"]
+    "types": ["@nuxt/types", "@types/node", "@nuxtjs/axios", "@nuxtjs/auth-next", "vue-sweetalert2", "@nuxtjs/moment"]
   },
   "exclude": ["node_modules", ".nuxt", "dist"]
 }

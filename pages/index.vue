@@ -58,8 +58,14 @@
     </b-table-simple>
     <b-button @click="logout">Logout</b-button>
     <b-button @click="fetchUser">fetchUser</b-button>
-    <div>{{ schedule }}</div>
-    <div>{{ events }}</div>
+    <div>schedules: {{ schedules.length }}</div>
+    <div>events: {{ events.length }}</div>
+    <div>
+      <div v-for="event in events" :key="event.id">
+        {{ event.durationFormatted }} ,
+        {{ event.startHour }}
+      </div>
+    </div>
   </div>
 </template>
 
@@ -90,8 +96,8 @@ export default class LoginPage extends Vue {
     }
   }
 
-  get schedule() {
-    return Schedule.query().with('events').first()
+  get schedules() {
+    return Schedule.query().withAll().get()
   }
 
   get events() {

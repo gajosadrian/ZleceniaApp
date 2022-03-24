@@ -90,6 +90,11 @@ export default {
     confirmButtonColor: '#007bff'
   },
 
+  moment: {
+    defaultLocale: 'pl',
+    locales: ['pl']
+  },
+
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: ['~/assets/css/custom.css'],
 
@@ -103,7 +108,7 @@ export default {
   components: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: ['@nuxt/typescript-build'],
+  buildModules: ['@nuxt/typescript-build', '@nuxtjs/moment'],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
