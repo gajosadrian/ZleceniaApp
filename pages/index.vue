@@ -105,7 +105,7 @@ export default class LoginPage extends Vue {
   }
 
   mounted() {
-    Schedule.fetch({ dateString: '2022-03-23' })
+    Schedule.fetch({ dateString: '2022-03-25' })
   }
 }
 </script>

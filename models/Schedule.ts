@@ -11,7 +11,7 @@ export default class Schedule extends Model {
 
   static fields() {
     return {
-      id: this.attr(null),
+      id: this.string(''),
       eventIds: this.attr(null),
       dateString: this.string(''),
       events: this.hasManyBy(Event, 'eventIds')
@@ -33,6 +33,8 @@ export default class Schedule extends Model {
   }
 
   static fetch({ dateString }: { dateString: string }) {
-    return this.api().get(`/zlecenia/grafik?date_string=${dateString}`)
+    const params = { date_string: dateString }
+    const queryString = new URLSearchParams(params).toString()
+    return this.api().get('/zlecenia/grafik?' + queryString)
   }
 }
