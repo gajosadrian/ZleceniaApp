@@ -1,4 +1,5 @@
 import { Model } from '@vuex-orm/core'
+import moment from 'moment'
 
 interface Note {
   idx: number
@@ -15,6 +16,13 @@ interface Note {
   original: string
 }
 
+interface Kind {
+  id: string | null
+  name: string
+  icon: string
+  color: string
+}
+
 export default class Service extends Model {
   static entity = 'services'
 
@@ -26,14 +34,23 @@ export default class Service extends Model {
   isReadyForService!: boolean
   hasToClarify!: boolean
   hasToDeliver!: boolean
-  isAtWorkshop!: boolean
+  hasToCall!: boolean
+  isInWorkshop!: boolean
   isWarranty!: boolean
   isPaid!: boolean
   isInsurance!: boolean
-  hasToCall!: boolean
-  isVisitConfirmed!: boolean
+  isSale!: boolean
+  isComplaint!: boolean
+  isArranged!: boolean
   isFinished!: boolean
   isCompleted!: boolean
+  isCostAccepted!: boolean
+  lastStatusDate!: string
+  kind!: Kind
+  kindFormatted!: string
+  durationInDays!: number
+  durationInWeekdays!: number
+  arrangedDate!: string
 
   static fields() {
     return {
@@ -45,14 +62,23 @@ export default class Service extends Model {
       isReadyForService: this.boolean(false),
       hasToClarify: this.boolean(false),
       hasToDeliver: this.boolean(false),
-      isAtWorkshop: this.boolean(false),
+      hasToCall: this.boolean(false),
+      isInWorkshop: this.boolean(false),
       isWarranty: this.boolean(false),
       isPaid: this.boolean(false),
       isInsurance: this.boolean(false),
-      hasToCall: this.boolean(false),
-      isVisitConfirmed: this.boolean(false),
+      isSale: this.boolean(false),
+      isComplaint: this.boolean(false),
+      isArranged: this.boolean(false),
       isFinished: this.boolean(false),
-      isCompleted: this.boolean(false)
+      isCompleted: this.boolean(false),
+      isCostAccepted: this.boolean(false),
+      lastStatusDate: this.string(''),
+      kind: this.attr(null),
+      kindFormatted: this.string(''),
+      durationInDays: this.number(0),
+      durationInWeekdays: this.number(0),
+      arrangedDate: this.string('')
     }
   }
 
@@ -68,15 +94,49 @@ export default class Service extends Model {
         isReadyForService: data.is_gotowe_do_naprawy,
         hasToClarify: data.is_do_wyjasnienia,
         hasToDeliver: data.is_do_odwiezienia,
-        isAtWorkshop: data.is_na_warsztacie,
+        hasToCall: data.is_dzwonic,
+        isInWorkshop: data.is_na_warsztacie,
         isWarranty: data.is_gwaranja,
         isPaid: data.is_odplatne,
         isInsurance: data.is_ubezpieczenie,
-        hasToCall: data.is_dzwonic,
-        isVisitConfirmed: data.is_umowiono,
+        isSale: data.is_sprzedaz,
+        isComplaint: data.is_nks,
+        isArranged: data.is_umowiono,
         isFinished: data.is_zakonczone,
-        isCompleted: data.is_soft_zakonczone
+        isCompleted: data.is_soft_zakonczone,
+        isCostAccepted: data.is_akc_kosztow,
+        lastStatusDate: data.data_statusu_formatted,
+        kind: {
+          id: data.znacznik.id,
+          name: data.znacznik.nazwa,
+          icon: data.znacznik.icon,
+          color: data.znacznik.color
+        },
+        kindFormatted: data.znacznik_formatted,
+        durationInDays: data.czas_trwania,
+        durationInWeekdays: data.czas_trwania_robocze,
+        arrangedDate: data.umowiono_data
       }
     }
+  }
+
+  get isMinCostVisible() {
+    return this.isPaid && !this.isSale && !this.isComplaint
+  }
+
+  get lastStatusAt() {
+    return moment(this.lastStatusDate)
+  }
+
+  get duration() {
+    return moment.duration(this.durationInDays, 'day')
+  }
+
+  get durationByWeekdays() {
+    return moment.duration(this.durationInWeekdays, 'day')
+  }
+
+  get arrangedAt() {
+    return moment(this.arrangedDate)
   }
 }

@@ -10,7 +10,7 @@ export default class Event extends Model {
   description!: string
   startDate!: string
   endDate!: string
-  service!: Service
+  service!: Service | null
 
   static fields() {
     return {

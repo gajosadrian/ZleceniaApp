@@ -16,43 +16,43 @@
         </b-tr>
         <b-tr>
           <b-td>Login:</b-td>
-          <b-th>{{ $auth.user.email }}</b-th>
+          <b-th>{{ $auth.user.login }}</b-th>
         </b-tr>
         <b-tr>
           <b-td>Name:</b-td>
           <b-th>{{ $auth.user.name }}</b-th>
         </b-tr>
         <b-tr>
-          <b-td>Name Short:</b-td>
-          <b-th>{{ $auth.user.nameShort }}</b-th>
+          <b-td>Short name:</b-td>
+          <b-th>{{ $auth.user.shortName }}</b-th>
         </b-tr>
         <b-tr>
           <b-td>First name:</b-td>
           <b-th>{{ $auth.user.firstName }}</b-th>
         </b-tr>
         <b-tr>
-          <b-td>Name Reversed:</b-td>
-          <b-th>{{ $auth.user.nameReversed }}</b-th>
+          <b-td>Inverted name:</b-td>
+          <b-th>{{ $auth.user.invertedName }}</b-th>
         </b-tr>
         <b-tr>
-          <b-td>Initials:</b-td>
-          <b-th>{{ $auth.user.initials }}</b-th>
+          <b-td>acronym:</b-td>
+          <b-th>{{ $auth.user.acronym }}</b-th>
         </b-tr>
         <b-tr>
-          <b-td>Is Admin:</b-td>
+          <b-td>Is admin:</b-td>
           <b-th>{{ $auth.user.isAdmin }}</b-th>
         </b-tr>
         <b-tr>
-          <b-td>Is Mobile:</b-td>
+          <b-td>Is mobile:</b-td>
           <b-th>{{ $auth.user.isMobile }}</b-th>
         </b-tr>
         <b-tr>
-          <b-td>Is Technik:</b-td>
-          <b-th>{{ $auth.user.isTechnik }}</b-th>
+          <b-td>Is technician:</b-td>
+          <b-th>{{ $auth.user.isTechnician }}</b-th>
         </b-tr>
         <b-tr>
-          <b-td>Technik Obj:</b-td>
-          <b-th>{{ Boolean($auth.user.technik) }}</b-th>
+          <b-td>Technician obj:</b-td>
+          <b-th>{{ Boolean($auth.user.technician) }}</b-th>
         </b-tr>
       </b-tbody>
     </b-table-simple>
@@ -104,8 +104,11 @@ export default class LoginPage extends Vue {
     return Event.all()
   }
 
-  mounted() {
+  created() {
     Schedule.fetch({ dateString: '2022-03-25' })
+    setTimeout(() => {
+      console.log(this.schedules)
+    }, 1000)
   }
 }
 </script>
