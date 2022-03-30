@@ -1,25 +1,30 @@
 import { Model } from '@vuex-orm/core'
 import moment from 'moment'
 import Service from '~/models/Service'
+import Appointment from '~/models/Appointment'
 
 export default class Event extends Model {
   static entity = 'events'
 
-  id!: number
-  serviceId!: number
-  description!: string
-  startDate!: string
-  endDate!: string
-  service!: Service | null
+  public id!: number
+  public appointmentId!: number
+  public appointment!: Appointment | null
+  public serviceId!: number
+  public service!: Service | null
+  public description!: string
+  protected startDateString!: string
+  protected endDateString!: string
 
   static fields() {
     return {
       id: this.number(0),
+      appointmentId: this.number(0),
+      appointment: this.belongsTo(Appointment, 'appointmentId'),
       serviceId: this.number(0),
+      service: this.belongsTo(Service, 'serviceId'),
       description: this.string(''),
-      startDate: this.string(''),
-      endDate: this.string(''),
-      service: this.belongsTo(Service, 'serviceId')
+      startDateString: this.string(''),
+      endDateString: this.string('')
     }
   }
 
@@ -28,23 +33,25 @@ export default class Event extends Model {
       const data = res.data
       return {
         id: data.id,
+        appointmentId: data.umowiono_id,
+        appointment: data.umowiono,
         serviceId: data.zlecenie_id,
-        description: data.temat,
-        startDate: data.data_rozpoczecia,
-        endDate: data.data_zakonczenia,
         service: data.zlecenie
           ? Service.apiConfig.dataTransformer({ data: data.zlecenie })
-          : null
+          : null,
+        description: data.temat,
+        startDateString: data.data_rozpoczecia,
+        endDateString: data.data_zakonczenia
       }
     }
   }
 
   get startAt() {
-    return moment(this.startDate)
+    return moment(this.startDateString)
   }
 
   get endAt() {
-    return moment(this.endDate)
+    return moment(this.endDateString)
   }
 
   get startHour() {

@@ -1,6 +1,26 @@
 import { Model } from '@vuex-orm/core'
 import moment from 'moment'
 
+enum Kind {
+  StatutoryWarranty = 'J',
+  Warranty = 'A',
+  PaidWarranty = 'I',
+  Insurance = 'H',
+  Paid = 'B',
+  DeviceAssembly = 'E',
+  SaleOfCommodity = 'E',
+  SaleOfDevice = 'D',
+  Complaint = 'G'
+}
+
+interface IKind {
+  id: Kind | null
+  name: string
+  nameFormatted: string
+  icon: string
+  color: string
+}
+
 interface Note {
   idx: number
   type:
@@ -14,13 +34,6 @@ interface Note {
   author: string | null
   content: string
   original: string
-}
-
-interface Kind {
-  id: string | null
-  name: string
-  icon: string
-  color: string
 }
 
 export default class Service extends Model {
@@ -41,16 +54,14 @@ export default class Service extends Model {
   isInsurance!: boolean
   isSale!: boolean
   isComplaint!: boolean
-  isArranged!: boolean
   isFinished!: boolean
   isCompleted!: boolean
   isCostAccepted!: boolean
   lastStatusDate!: string
-  kind!: Kind
+  kind!: IKind
   kindFormatted!: string
   durationInDays!: number
   durationInWeekdays!: number
-  arrangedDate!: string
 
   static fields() {
     return {
@@ -69,7 +80,6 @@ export default class Service extends Model {
       isInsurance: this.boolean(false),
       isSale: this.boolean(false),
       isComplaint: this.boolean(false),
-      isArranged: this.boolean(false),
       isFinished: this.boolean(false),
       isCompleted: this.boolean(false),
       isCostAccepted: this.boolean(false),
@@ -77,8 +87,7 @@ export default class Service extends Model {
       kind: this.attr(null),
       kindFormatted: this.string(''),
       durationInDays: this.number(0),
-      durationInWeekdays: this.number(0),
-      arrangedDate: this.string('')
+      durationInWeekdays: this.number(0)
     }
   }
 
@@ -101,21 +110,19 @@ export default class Service extends Model {
         isInsurance: data.is_ubezpieczenie,
         isSale: data.is_sprzedaz,
         isComplaint: data.is_nks,
-        isArranged: data.is_umowiono,
         isFinished: data.is_zakonczone,
         isCompleted: data.is_soft_zakonczone,
         isCostAccepted: data.is_akc_kosztow,
         lastStatusDate: data.data_statusu_formatted,
-        kind: {
+        kind: <IKind>{
           id: data.znacznik.id,
           name: data.znacznik.nazwa,
+          nameFormatted: data.znacznik_formatted,
           icon: data.znacznik.icon,
           color: data.znacznik.color
         },
-        kindFormatted: data.znacznik_formatted,
         durationInDays: data.czas_trwania,
-        durationInWeekdays: data.czas_trwania_robocze,
-        arrangedDate: data.umowiono_data
+        durationInWeekdays: data.czas_trwania_robocze
       }
     }
   }
@@ -134,9 +141,5 @@ export default class Service extends Model {
 
   get durationByWeekdays() {
     return moment.duration(this.durationInWeekdays, 'day')
-  }
-
-  get arrangedAt() {
-    return moment(this.arrangedDate)
   }
 }

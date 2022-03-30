@@ -6,21 +6,21 @@ import Technician from '~/models/Technician'
 export default class Schedule extends Model {
   static entity = 'schedules'
 
-  id!: string
-  technicianId!: number | null
-  eventIds!: number[]
-  dateString!: string
-  technician!: Technician
-  events!: Event[]
+  public id!: string
+  public technicianId!: number | null
+  public technician!: Technician
+  public eventIds!: number[]
+  public events!: Event[]
+  protected dateString!: string
 
   static fields() {
     return {
       id: this.string(''),
       technicianId: this.number(0),
-      eventIds: this.attr(null),
-      dateString: this.string(''),
       technician: this.belongsTo(Technician, 'technicianId'),
-      events: this.hasManyBy(Event, 'eventIds')
+      eventIds: this.attr(null),
+      events: this.hasManyBy(Event, 'eventIds'),
+      dateString: this.string('')
     }
   }
 
@@ -30,14 +30,14 @@ export default class Schedule extends Model {
       return {
         id: data.id,
         technicianId: data.technik_id,
-        eventIds: data.terminy_ids,
-        dateString: data.date_string,
         technician: data.technik
           ? Technician.apiConfig.dataTransformer({ data: data.technik })
           : null,
+        eventIds: data.terminy_ids,
         events: data.terminy.map((termin: any) =>
           Event.apiConfig.dataTransformer({ data: termin })
-        )
+        ),
+        dateString: data.date_string
       }
     }
   }

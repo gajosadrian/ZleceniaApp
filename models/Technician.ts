@@ -3,13 +3,13 @@ import { Model } from '@vuex-orm/core'
 export default class Technician extends Model {
   static entity = 'technicians'
 
-  id!: number
-  firstName!: string
-  lastName!: string
-  symbolKey!: string
-  laborSymbol!: string
-  travelSymbol!: string
-  settlementSymbol!: string
+  public id!: number
+  public firstName!: string
+  public lastName!: string
+  public symbolKey!: string
+  public laborSymbol!: string
+  public travelSymbol!: string
+  public settlementSymbol!: string
 
   static fields() {
     return {

@@ -9,7 +9,6 @@ export default class User extends Model {
   email!: string
   login!: string
   isTechnician!: boolean
-  isDesktop!: boolean
   isMobile!: boolean
   isAdmin!: boolean
 
@@ -20,7 +19,6 @@ export default class User extends Model {
       email: this.string(''),
       login: this.string(''),
       isTechnician: this.boolean(false),
-      isDesktop: this.boolean(false),
       isMobile: this.boolean(false),
       isAdmin: this.boolean(false)
     }
@@ -35,7 +33,6 @@ export default class User extends Model {
         email: data.email,
         login: data.login,
         isTechnician: data.is_technik,
-        isDesktop: data.is_desktop,
         isMobile: data.is_mobile,
         isAdmin: data.is_admin
       }

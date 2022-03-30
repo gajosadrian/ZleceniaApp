@@ -35,7 +35,7 @@
           <b-th>{{ $auth.user.invertedName }}</b-th>
         </b-tr>
         <b-tr>
-          <b-td>acronym:</b-td>
+          <b-td>Acronym:</b-td>
           <b-th>{{ $auth.user.acronym }}</b-th>
         </b-tr>
         <b-tr>
@@ -58,7 +58,7 @@
     </b-table-simple>
     <b-button @click="logout">Logout</b-button>
     <b-button @click="fetchUser">fetchUser</b-button>
-    <div>schedules: {{ schedules.length }}</div>
+    <div>schedules: {{ schedules }}</div>
     <div>events: {{ events.length }}</div>
     <div>
       <div v-for="event in events" :key="event.id">
@@ -97,7 +97,10 @@ export default class LoginPage extends Vue {
   }
 
   get schedules() {
-    return Schedule.query().withAll().get()
+    return Schedule.query()
+      .withAll()
+      .with(['events.service', 'events.appointment.user'])
+      .get()
   }
 
   get events() {
@@ -105,10 +108,10 @@ export default class LoginPage extends Vue {
   }
 
   created() {
-    Schedule.fetch({ dateString: '2022-03-25' })
+    Schedule.fetch({ dateString: '2022-03-31' })
     setTimeout(() => {
       console.log(this.schedules)
-    }, 1000)
+    }, 3000)
   }
 }
 </script>
