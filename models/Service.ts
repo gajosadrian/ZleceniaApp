@@ -8,9 +8,9 @@ enum Kind {
   Insurance = 'H',
   Paid = 'B',
   DeviceAssembly = 'E',
-  SaleOfCommodity = 'E',
+  SaleOfWare = 'E',
   SaleOfDevice = 'D',
-  Complaint = 'G'
+  Reclamation = 'G'
 }
 
 interface IKind {
