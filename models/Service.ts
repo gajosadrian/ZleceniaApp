@@ -21,6 +21,18 @@ interface IKind {
   color: string
 }
 
+enum ExpertiseStatus {
+  Uninformed = 0,
+  Informed = 1
+}
+
+interface IExpertise {
+  status: ExpertiseStatus
+  labor: number
+  travel: number
+  dateString: string
+}
+
 interface Note {
   idx: number
   type:
@@ -39,29 +51,29 @@ interface Note {
 export default class Service extends Model {
   static entity = 'services'
 
-  id!: number
-  number!: string
-  foreignNumber!: string
-  description!: string
-  noteGroups!: Note[][]
-  isReadyForService!: boolean
-  hasToClarify!: boolean
-  hasToDeliver!: boolean
-  hasToCall!: boolean
-  isInWorkshop!: boolean
-  isWarranty!: boolean
-  isPaid!: boolean
-  isInsurance!: boolean
-  isSale!: boolean
-  isComplaint!: boolean
-  isFinished!: boolean
-  isCompleted!: boolean
-  isCostAccepted!: boolean
-  lastStatusDate!: string
-  kind!: IKind
-  kindFormatted!: string
-  durationInDays!: number
-  durationInWeekdays!: number
+  public id!: number
+  public number!: string
+  public foreignNumber!: string
+  public description!: string
+  public noteGroups!: Note[][]
+  public isReadyForService!: boolean
+  public hasToClarify!: boolean
+  public hasToDeliver!: boolean
+  public hasToCall!: boolean
+  public isInWorkshop!: boolean
+  public isWarranty!: boolean
+  public isPaid!: boolean
+  public isInsurance!: boolean
+  public isSale!: boolean
+  public isComplaint!: boolean
+  public isFinished!: boolean
+  public isCompleted!: boolean
+  public isCostAccepted!: boolean
+  public kind!: IKind
+  public expertise!: IExpertise
+  protected lastStatusDate!: string
+  protected durationInDays!: number
+  protected durationInWeekdays!: number
 
   static fields() {
     return {
@@ -83,9 +95,9 @@ export default class Service extends Model {
       isFinished: this.boolean(false),
       isCompleted: this.boolean(false),
       isCostAccepted: this.boolean(false),
-      lastStatusDate: this.string(''),
       kind: this.attr(null),
-      kindFormatted: this.string(''),
+      expertise: this.attr(null),
+      lastStatusDate: this.string(''),
       durationInDays: this.number(0),
       durationInWeekdays: this.number(0)
     }
@@ -113,7 +125,6 @@ export default class Service extends Model {
         isFinished: data.is_zakonczone,
         isCompleted: data.is_soft_zakonczone,
         isCostAccepted: data.is_akc_kosztow,
-        lastStatusDate: data.data_statusu_formatted,
         kind: <IKind>{
           id: data.znacznik.id,
           name: data.znacznik.nazwa,
@@ -121,6 +132,13 @@ export default class Service extends Model {
           icon: data.znacznik.icon,
           color: data.znacznik.color
         },
+        expertise: <IExpertise>{
+          status: data.dane.spr_status,
+          labor: data.dane.spr_sprawdzenie,
+          travel: data.dane.spr_dojazd,
+          dateString: data.dane.spr_data
+        },
+        lastStatusDate: data.data_statusu_formatted,
         durationInDays: data.czas_trwania,
         durationInWeekdays: data.czas_trwania_robocze
       }

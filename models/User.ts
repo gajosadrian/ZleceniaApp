@@ -4,13 +4,13 @@ import _ from 'lodash'
 export default class User extends Model {
   static entity = 'users'
 
-  id!: string
-  name!: string
-  email!: string
-  login!: string
-  isTechnician!: boolean
-  isMobile!: boolean
-  isAdmin!: boolean
+  public id!: string
+  public name!: string
+  public email!: string
+  public login!: string
+  public isTechnician!: boolean
+  public isMobile!: boolean
+  public isAdmin!: boolean
 
   static fields() {
     return {
