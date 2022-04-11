@@ -1,5 +1,6 @@
 import { Model } from '@vuex-orm/core'
 import moment from 'moment'
+import Customer from '~/models/Customer'
 
 enum Kind {
   StatutoryWarranty = 'J',
@@ -29,7 +30,7 @@ enum ExpertiseStatus {
 interface IExpertise {
   status: ExpertiseStatus
   labor: number
-  travel: number
+  delivery: number
   dateString: string
 }
 
@@ -52,6 +53,8 @@ export default class Service extends Model {
   static entity = 'services'
 
   public id!: number
+  public customerId!: number
+  public customer!: Customer
   public number!: string
   public foreignNumber!: string
   public description!: string
@@ -70,7 +73,8 @@ export default class Service extends Model {
   public isCompleted!: boolean
   public isCostAccepted!: boolean
   public kind!: IKind
-  public expertise!: IExpertise
+  public expertise!: IExpertise | null
+  public requiredPhotos!: string[]
   protected lastStatusDate!: string
   protected durationInDays!: number
   protected durationInWeekdays!: number
@@ -78,6 +82,8 @@ export default class Service extends Model {
   static fields() {
     return {
       id: this.number(0),
+      customerId: this.number(0),
+      customer: this.attr(null),
       number: this.string(''),
       foreignNumber: this.string(''),
       description: this.string(''),
@@ -97,6 +103,7 @@ export default class Service extends Model {
       isCostAccepted: this.boolean(false),
       kind: this.attr(null),
       expertise: this.attr(null),
+      requiredPhotos: this.attr(null),
       lastStatusDate: this.string(''),
       durationInDays: this.number(0),
       durationInWeekdays: this.number(0)
@@ -108,6 +115,10 @@ export default class Service extends Model {
       const data = res.data
       return {
         id: data.id,
+        customerId: data.klient_id,
+        customer: data.klient
+          ? Customer.apiConfig.dataTransformer({ data: data.klient })
+          : null,
         number: data.nr,
         foreignNumber: data.nr_obcy,
         description: data.opis,
@@ -132,13 +143,17 @@ export default class Service extends Model {
           icon: data.znacznik.icon,
           color: data.znacznik.color
         },
-        expertise: <IExpertise>{
-          status: data.dane.spr_status,
-          labor: data.dane.spr_sprawdzenie,
-          travel: data.dane.spr_dojazd,
-          dateString: data.dane.spr_data
-        },
-        lastStatusDate: data.data_statusu_formatted,
+        expertise:
+          data.dane.spr_status !== null
+            ? <IExpertise>{
+                status: data.dane.spr_status,
+                labor: data.dane.spr_sprawdzenie ?? 0,
+                delivery: data.dane.spr_dojazd ?? 0,
+                dateString: data.dane.spr_data
+              }
+            : null,
+        requiredPhotos: data.required_photos,
+        lastStatusDate: data.data_statusu,
         durationInDays: data.czas_trwania,
         durationInWeekdays: data.czas_trwania_robocze
       }

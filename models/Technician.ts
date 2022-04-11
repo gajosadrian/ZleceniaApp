@@ -8,7 +8,7 @@ export default class Technician extends Model {
   public lastName!: string
   public symbolKey!: string
   public laborSymbol!: string
-  public travelSymbol!: string
+  public deliverySymbol!: string
   public settlementSymbol!: string
 
   static fields() {
@@ -18,7 +18,7 @@ export default class Technician extends Model {
       lastName: this.string(''),
       symbolKey: this.string(''),
       laborSymbol: this.string(''),
-      travelSymbol: this.string(''),
+      deliverySymbol: this.string(''),
       settlementSymbol: this.string('')
     }
   }
@@ -32,7 +32,7 @@ export default class Technician extends Model {
         lastName: data.nazwisko,
         symbolKey: data.symbol_key,
         laborSymbol: data.symbol_robocizna,
-        travelSymbol: data.symbol_dojazd,
+        deliverySymbol: data.symbol_dojazd,
         settlementSymbol: data.symbol_rozliczone
       }
     }

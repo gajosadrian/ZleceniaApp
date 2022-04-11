@@ -2,6 +2,7 @@ import { Model } from '@vuex-orm/core'
 import moment from 'moment'
 import Service from '~/models/Service'
 import Appointment from '~/models/Appointment'
+import Customer from '~/models/Customer'
 
 export default class Event extends Model {
   static entity = 'events'
@@ -11,6 +12,8 @@ export default class Event extends Model {
   public appointment!: Appointment | null
   public serviceId!: number
   public service!: Service | null
+  public customerId!: number
+  public customer!: Customer | null
   public description!: string
   protected startDateString!: string
   protected endDateString!: string
@@ -22,6 +25,8 @@ export default class Event extends Model {
       appointment: this.belongsTo(Appointment, 'appointmentId'),
       serviceId: this.number(0),
       service: this.belongsTo(Service, 'serviceId'),
+      customerId: this.number(0),
+      customer: this.belongsTo(Customer, 'customerId'),
       description: this.string(''),
       startDateString: this.string(''),
       endDateString: this.string('')
@@ -38,6 +43,10 @@ export default class Event extends Model {
         serviceId: data.zlecenie_id,
         service: data.zlecenie
           ? Service.apiConfig.dataTransformer({ data: data.zlecenie })
+          : null,
+        customerId: data.klient_id,
+        customer: data.klient
+          ? Customer.apiConfig.dataTransformer({ data: data.klient })
           : null,
         description: data.temat,
         startDateString: data.data_rozpoczecia,
