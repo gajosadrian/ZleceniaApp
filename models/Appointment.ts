@@ -8,6 +8,7 @@ export default class Appointment extends Model {
   public id!: number
   public userId!: number
   public user!: User | null
+  public hasToCall!: boolean
   protected dateString!: string
 
   static fields() {
@@ -15,6 +16,7 @@ export default class Appointment extends Model {
       id: this.number(0),
       userId: this.number(0),
       user: this.belongsTo(User, 'userId'),
+      hasToCall: this.boolean(false),
       dateString: this.string('')
     }
   }

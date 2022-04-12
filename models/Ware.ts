@@ -3,19 +3,19 @@ import { Model } from '@vuex-orm/core'
 export default class Ware extends Model {
   static entity = 'wares'
 
-  id!: number
-  name!: string
-  description!: string
-  symbol!: string
-  foreignSymbol!: string
-  foreignSymbol2!: string
-  shelf!: string
-  unit!: string
-  isService!: boolean
-  isVoidWare!: boolean
-  isPhoto!: boolean
-  photoUrl!: string
-  compressedPhotoUrl!: string
+  public id!: number
+  public name!: string
+  public description!: string
+  public symbol!: string
+  public foreignSymbol!: string
+  public foreignSymbol2!: string
+  public shelf!: string
+  public unit!: string
+  public isService!: boolean
+  public isVoidWare!: boolean
+  public isPhoto!: boolean
+  public photoUrl!: string
+  public compressedPhotoUrl!: string
 
   static fields() {
     return {

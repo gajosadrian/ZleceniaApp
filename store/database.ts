@@ -10,6 +10,7 @@ import Customer from '~/models/Customer'
 import Device from '~/models/Device'
 import Ware from '~/models/Ware'
 import CostItem from '~/models/CostItem'
+import CostItemOrder from '~/models/CostItemOrder'
 
 const database = new Database()
 
@@ -24,5 +25,6 @@ database.register(Device)
 database.register(User)
 database.register(Ware)
 database.register(CostItem)
+database.register(CostItemOrder)
 
 export default database

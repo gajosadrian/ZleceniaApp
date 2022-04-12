@@ -87,4 +87,8 @@ export default class Event extends Model {
     }
     return `${hours} godz. ${minutes} min.`
   }
+
+  get isAppointment(): boolean {
+    return !!this.appointmentId
+  }
 }

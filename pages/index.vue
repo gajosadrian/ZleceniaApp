@@ -39,6 +39,10 @@
           <b-th>{{ $auth.user.acronym }}</b-th>
         </b-tr>
         <b-tr>
+          <b-td>Initials:</b-td>
+          <b-th>{{ $auth.user.initials }}</b-th>
+        </b-tr>
+        <b-tr>
           <b-td>Is admin:</b-td>
           <b-th>{{ $auth.user.isAdmin }}</b-th>
         </b-tr>
@@ -58,7 +62,7 @@
     </b-table-simple>
     <b-button @click="logout">Logout</b-button>
     <b-button @click="fetchUser">fetchUser</b-button>
-    <div>{{ $moment('2022-04-08 08:49:17.680') }}</div>
+    <div>{{ $moment('2022-04-08T12:34:04.083000Z') }}</div>
     <div>schedules: {{ schedules }}</div>
     <div>events: {{ events.length }}</div>
     <div>
@@ -109,7 +113,7 @@ export default class LoginPage extends Vue {
   }
 
   created() {
-    Schedule.fetch({ dateString: '2022-04-08' })
+    Schedule.fetch({ dateString: '2022-04-11' })
     setTimeout(() => {
       console.log(this.schedules)
     }, 3000)

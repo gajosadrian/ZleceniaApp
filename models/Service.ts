@@ -1,6 +1,9 @@
 import { Model } from '@vuex-orm/core'
 import moment from 'moment'
 import Customer from '~/models/Customer'
+import Device from '~/models/Device'
+import CostItem from '~/models/CostItem'
+import Event from '~/models/Event'
 
 enum Kind {
   StatutoryWarranty = 'J',
@@ -55,6 +58,9 @@ export default class Service extends Model {
   public id!: number
   public customerId!: number
   public customer!: Customer
+  public deviceId!: number
+  public device!: Device | null
+  public costItems!: CostItem[]
   public number!: string
   public foreignNumber!: string
   public description!: string
@@ -62,7 +68,6 @@ export default class Service extends Model {
   public isReadyForService!: boolean
   public hasToClarify!: boolean
   public hasToDeliver!: boolean
-  public hasToCall!: boolean
   public isInWorkshop!: boolean
   public isWarranty!: boolean
   public isPaid!: boolean
@@ -83,7 +88,10 @@ export default class Service extends Model {
     return {
       id: this.number(0),
       customerId: this.number(0),
-      customer: this.attr(null),
+      customer: this.belongsTo(Customer, 'customerId'),
+      deviceId: this.number(0),
+      device: this.belongsTo(Device, 'deviceId'),
+      costItems: this.hasMany(CostItem, 'serviceId'),
       number: this.string(''),
       foreignNumber: this.string(''),
       description: this.string(''),
@@ -91,7 +99,6 @@ export default class Service extends Model {
       isReadyForService: this.boolean(false),
       hasToClarify: this.boolean(false),
       hasToDeliver: this.boolean(false),
-      hasToCall: this.boolean(false),
       isInWorkshop: this.boolean(false),
       isWarranty: this.boolean(false),
       isPaid: this.boolean(false),
@@ -119,6 +126,13 @@ export default class Service extends Model {
         customer: data.klient
           ? Customer.apiConfig.dataTransformer({ data: data.klient })
           : null,
+        deviceId: data.urzadzenie_id,
+        device: data.urzadzenie
+          ? Device.apiConfig.dataTransformer({ data: data.urzadzenie })
+          : null,
+        costItems: data.kosztorys_pozycje.map((pozycja: any) =>
+          CostItem.apiConfig.dataTransformer({ data: pozycja })
+        ),
         number: data.nr,
         foreignNumber: data.nr_obcy,
         description: data.opis,
@@ -126,7 +140,6 @@ export default class Service extends Model {
         isReadyForService: data.is_gotowe_do_naprawy,
         hasToClarify: data.is_do_wyjasnienia,
         hasToDeliver: data.is_do_odwiezienia,
-        hasToCall: data.is_dzwonic,
         isInWorkshop: data.is_na_warsztacie,
         isWarranty: data.is_gwaranja,
         isPaid: data.is_odplatne,
