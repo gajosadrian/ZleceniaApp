@@ -1,11 +1,32 @@
 import { Model } from '@vuex-orm/core'
 import _ from 'lodash'
+import moment from 'moment'
 import Ware from '~/models/Ware'
 import CostItemOrder from '~/models/CostItemOrder'
+import User from '~/models/User'
 
-enum State {
-  Mounted = 'zamontowane'
-  // TODO
+export enum Type {
+  Labor,
+  Delivery,
+  Part,
+  Shipping,
+  Settlement
+}
+
+export enum State {
+  Prepared = 'odlozone',
+  Mounted = 'zamontowane',
+  Sold = 'sprzedane',
+  xxx = 'rozpisane',
+  Ordered = 'zamowione',
+  Estimate = 'wycena',
+  Deposit = 'depozyt',
+  ToShipping = 'do_wyslania',
+  Shipped = 'wyslane',
+  Saleable = 'chodliwe',
+  ForAnotherDate = 'na_inny_termin',
+  Unnecessary = 'niepotrzebne',
+  Unsettled = 'nierozliczone'
 }
 
 interface IState {
@@ -22,14 +43,21 @@ export default class CostItem extends Model {
   public id!: number
   public serviceId!: number
   public wareId!: number
-  public ware!: Ware
+  public ware!: Ware | null
   public orderId!: number
   public order!: CostItemOrder | null
+  public createdUserId!: number
+  public createdUser!: User | null
+  public updatedUserId!: number
+  public updatedUser!: User | null
+  public typeId!: Type
   public description!: string
   public price!: number
   public quantity!: number
   public taxRate!: number
-  public state!: IState
+  public state!: IState | null
+  protected createdDateString!: string
+  protected updatedDateString!: string
 
   static fields() {
     return {
@@ -39,11 +67,18 @@ export default class CostItem extends Model {
       ware: this.belongsTo(Ware, 'wareId'),
       orderId: this.number(0),
       order: this.belongsTo(CostItemOrder, 'orderId'),
+      createdUserId: this.number(0),
+      createdUser: this.belongsTo(User, 'createdUserId'),
+      updatedUserId: this.number(0),
+      updatedUser: this.belongsTo(User, 'updatedUserId'),
+      typeId: this.attr(null),
       description: this.string(''),
       price: this.number(0),
       quantity: this.number(0),
       taxRate: this.number(0),
-      state: this.attr(null)
+      state: this.attr(null),
+      createdDateString: this.string(''),
+      updatedDateString: this.string('')
     }
   }
 
@@ -59,6 +94,19 @@ export default class CostItem extends Model {
           : null,
         orderId: data.zamowienie_obj_id,
         order: data.zamowienie_obj,
+        createdUserId: data.user_id,
+        createdUser: data.user,
+        updatedUserId: data.updated_user_id,
+        updatedUser: data.user_updated,
+        typeId: data.is_robocizna
+          ? Type.Labor
+          : data.is_dojazd
+          ? Type.Delivery
+          : data.is_transport
+          ? Type.Shipping
+          : data.is_rozliczenie
+          ? Type.Settlement
+          : Type.Part,
         description: data.opis,
         price: data.cena,
         quantity: data.ilosc,
@@ -94,5 +142,15 @@ export default class CostItem extends Model {
 
   get amount(): number {
     return _.round(this.grossAmount / (1 + this.taxRate), 2)
+  }
+
+  get createdAt() {
+    if (!this.createdDateString) return null
+    return moment(this.createdDateString)
+  }
+
+  get updatedAt() {
+    if (!this.updatedDateString) return null
+    return moment(this.updatedDateString)
   }
 }

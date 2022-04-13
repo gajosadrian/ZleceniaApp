@@ -40,12 +40,12 @@ export default class User extends Model {
   }
 
   get firstName() {
-    const name = _.head(this.name.split(' '))
+    const name = _.last(this.name.split(' '))
     return name ? name.trim() : ''
   }
 
   get lastName() {
-    const name = _.last(this.name.split(' '))
+    const name = _.head(this.name.split(' '))
     return name ? name.trim() : ''
   }
 

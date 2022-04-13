@@ -3,9 +3,8 @@ import moment from 'moment'
 import Customer from '~/models/Customer'
 import Device from '~/models/Device'
 import CostItem from '~/models/CostItem'
-import Event from '~/models/Event'
 
-enum Kind {
+export enum Kind {
   StatutoryWarranty = 'J',
   Warranty = 'A',
   PaidWarranty = 'I',
@@ -25,7 +24,7 @@ interface IKind {
   color: string
 }
 
-enum ExpertiseStatus {
+export enum ExpertiseStatus {
   Uninformed = 0,
   Informed = 1
 }
@@ -57,7 +56,7 @@ export default class Service extends Model {
 
   public id!: number
   public customerId!: number
-  public customer!: Customer
+  public customer!: Customer | null
   public deviceId!: number
   public device!: Device | null
   public costItems!: CostItem[]
@@ -178,6 +177,7 @@ export default class Service extends Model {
   }
 
   get lastStatusAt() {
+    if (!this.lastStatusDate) return null
     return moment(this.lastStatusDate)
   }
 

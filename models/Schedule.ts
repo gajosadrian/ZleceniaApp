@@ -8,7 +8,7 @@ export default class Schedule extends Model {
 
   public id!: string
   public technicianId!: number | null
-  public technician!: Technician
+  public technician!: Technician | null
   public eventIds!: number[]
   public events!: Event[]
   protected dateString!: string

@@ -7,7 +7,7 @@ export default class CostItemOrder extends Model {
   public id!: number
   public number!: string
   public isInProgress!: boolean
-  public dateString!: string
+  protected dateString!: string
 
   static fields() {
     return {
@@ -19,6 +19,7 @@ export default class CostItemOrder extends Model {
   }
 
   get date() {
+    if (!this.dateString) return null
     return moment(this.dateString)
   }
 }

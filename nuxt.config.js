@@ -101,7 +101,8 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     { src: '~/plugins/vuex-persist.ts', mode: 'client' },
-    { src: '~/plugins/vuex-orm-axios.ts', mode: 'client' }
+    { src: '~/plugins/vuex-orm-axios.ts', mode: 'client' },
+    { src: '~/plugins/enums.ts', mode: 'client' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
