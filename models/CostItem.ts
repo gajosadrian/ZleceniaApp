@@ -81,7 +81,7 @@ export default class CostItem extends Model {
   }
 
   get grossPrice(): number {
-    return _.round(this.price + this.tax, 2)
+    return _.round(this.price * (1 + this.taxRate), 2)
   }
 
   get grossAmount(): number {
@@ -89,10 +89,10 @@ export default class CostItem extends Model {
   }
 
   get tax(): number {
-    return _.round(this.grossAmount / (1 + this.taxRate), 2)
+    return this.grossAmount - this.amount
   }
 
   get amount(): number {
-    return this.grossAmount - this.tax
+    return _.round(this.grossAmount / (1 + this.taxRate), 2)
   }
 }

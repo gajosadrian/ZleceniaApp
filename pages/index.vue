@@ -62,7 +62,6 @@
     </b-table-simple>
     <b-button @click="logout">Logout</b-button>
     <b-button @click="fetchUser">fetchUser</b-button>
-    <div>{{ $moment('2022-04-08T12:34:04.083000Z') }}</div>
     <div>schedules: {{ schedules }}</div>
     <div>events: {{ events.length }}</div>
     <div>
@@ -102,10 +101,7 @@ export default class LoginPage extends Vue {
   }
 
   get schedules() {
-    return Schedule.query()
-      .withAll()
-      .with(['events.service', 'events.customer', 'events.appointment.user'])
-      .get()
+    return Schedule.query().withAllRecursive().get()
   }
 
   get events() {
@@ -113,7 +109,7 @@ export default class LoginPage extends Vue {
   }
 
   created() {
-    Schedule.fetch({ dateString: '2022-04-11' })
+    Schedule.fetch({ dateString: '2022-04-13' })
     setTimeout(() => {
       console.log(this.schedules)
     }, 3000)
