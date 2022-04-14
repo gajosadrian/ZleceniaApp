@@ -3,6 +3,8 @@ import moment from 'moment'
 import Customer from '~/models/Customer'
 import Device from '~/models/Device'
 import CostItem from '~/models/CostItem'
+import Photo from '~/models/Photo'
+import PhotoType, { Type as PhotoTypeId } from '~/models/PhotoType'
 
 export enum Kind {
   StatutoryWarranty = 'J',
@@ -60,6 +62,10 @@ export default class Service extends Model {
   public deviceId!: number
   public device!: Device | null
   public costItems!: CostItem[]
+  public photosService!: Photo[]
+  public photosDevice!: Photo[]
+  public requiredPhotoTypeIds!: PhotoTypeId[]
+  public requiredPhotoTypes!: PhotoType[]
   public number!: string
   public foreignNumber!: string
   public description!: string
@@ -78,7 +84,6 @@ export default class Service extends Model {
   public isCostAccepted!: boolean
   public kind!: IKind
   public expertise!: IExpertise | null
-  public requiredPhotos!: string[]
   protected lastStatusDate!: string
   protected durationInDays!: number
   protected durationInWeekdays!: number
@@ -91,6 +96,10 @@ export default class Service extends Model {
       deviceId: this.number(0),
       device: this.belongsTo(Device, 'deviceId'),
       costItems: this.hasMany(CostItem, 'serviceId'),
+      photosService: this.hasMany(Photo, 'serviceId', 'id'),
+      photosDevice: this.hasMany(Photo, 'deviceId', 'deviceId'),
+      requiredPhotoTypeIds: this.attr(null),
+      requiredPhotoTypes: this.hasManyBy(PhotoType, 'requiredPhotoTypeIds'),
       number: this.string(''),
       foreignNumber: this.string(''),
       description: this.string(''),
@@ -109,7 +118,6 @@ export default class Service extends Model {
       isCostAccepted: this.boolean(false),
       kind: this.attr(null),
       expertise: this.attr(null),
-      requiredPhotos: this.attr(null),
       lastStatusDate: this.string(''),
       durationInDays: this.number(0),
       durationInWeekdays: this.number(0)
@@ -129,9 +137,16 @@ export default class Service extends Model {
         device: data.urzadzenie
           ? Device.apiConfig.dataTransformer({ data: data.urzadzenie })
           : null,
-        costItems: data.kosztorys_pozycje.map((pozycja: any) =>
-          CostItem.apiConfig.dataTransformer({ data: pozycja })
+        costItems: data.kosztorys_pozycje.map((costItem: any) =>
+          CostItem.apiConfig.dataTransformer({ data: costItem })
         ),
+        photosService: data.zdjecia_do_zlecenia.map((photo: any) =>
+          Photo.apiConfig.dataTransformer({ data: photo })
+        ),
+        photosDevice: data.zdjecia_do_urzadzenia.map((photo: any) =>
+          Photo.apiConfig.dataTransformer({ data: photo })
+        ),
+        requiredPhotoTypeIds: data.required_photos,
         number: data.nr,
         foreignNumber: data.nr_obcy,
         description: data.opis,
@@ -164,7 +179,6 @@ export default class Service extends Model {
                 dateString: data.dane.spr_data
               }
             : null,
-        requiredPhotos: data.required_photos,
         lastStatusDate: data.data_statusu,
         durationInDays: data.czas_trwania,
         durationInWeekdays: data.czas_trwania_robocze
@@ -187,5 +201,9 @@ export default class Service extends Model {
 
   get durationByWeekdays() {
     return moment.duration(this.durationInWeekdays, 'day')
+  }
+
+  get photos() {
+    return [...this.photosService, ...this.photosDevice]
   }
 }

@@ -102,7 +102,8 @@ export default {
   plugins: [
     { src: '~/plugins/vuex-persist.ts', mode: 'client' },
     { src: '~/plugins/vuex-orm-axios.ts', mode: 'client' },
-    { src: '~/plugins/enums.ts', mode: 'client' }
+    { src: '~/plugins/enums.ts', mode: 'client' },
+    { src: '~/plugins/setup-photo-types.ts', mode: 'client' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

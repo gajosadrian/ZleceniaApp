@@ -34,8 +34,8 @@ export default class Schedule extends Model {
           ? Technician.apiConfig.dataTransformer({ data: data.technik })
           : null,
         eventIds: data.terminy_ids,
-        events: data.terminy.map((termin: any) =>
-          Event.apiConfig.dataTransformer({ data: termin })
+        events: data.terminy.map((event: any) =>
+          Event.apiConfig.dataTransformer({ data: event })
         ),
         dateString: data.date_string
       }

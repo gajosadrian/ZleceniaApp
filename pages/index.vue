@@ -113,7 +113,7 @@ export default class LoginPage extends Vue {
     Schedule.fetch({ dateString: '2022-04-14' })
     setTimeout(() => {
       console.log(this.schedules)
-    }, 3000)
+    }, 4000)
   }
 }
 </script>

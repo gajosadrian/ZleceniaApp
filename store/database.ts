@@ -11,6 +11,8 @@ import Device from '~/models/Device'
 import Ware from '~/models/Ware'
 import CostItem from '~/models/CostItem'
 import CostItemOrder from '~/models/CostItemOrder'
+import Photo from '~/models/Photo'
+import PhotoType from '~/models/PhotoType'
 
 const database = new Database()
 
@@ -26,5 +28,7 @@ database.register(User)
 database.register(Ware)
 database.register(CostItem)
 database.register(CostItemOrder)
+database.register(Photo)
+database.register(PhotoType)
 
 export default database
