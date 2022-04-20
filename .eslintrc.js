@@ -4,6 +4,11 @@ module.exports = {
     browser: true,
     node: true
   },
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: false
+    }
+  },
   extends: [
     '@nuxtjs/eslint-config-typescript',
     'plugin:nuxt/recommended',

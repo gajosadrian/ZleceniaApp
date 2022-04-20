@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <b-container>
     <b-table-simple>
       <b-tbody>
         <b-tr>
@@ -62,7 +62,6 @@
     </b-table-simple>
     <b-button @click="logout">Logout</b-button>
     <b-button @click="fetchUser">fetchUser</b-button>
-    <div>{{ $moment('') }}</div>
     <div>schedules: {{ schedules }}</div>
     <div>events: {{ events.length }}</div>
     <div>
@@ -71,7 +70,7 @@
         {{ event.startHour }}
       </div>
     </div>
-  </div>
+  </b-container>
 </template>
 
 <script lang="ts">
@@ -110,7 +109,7 @@ export default class LoginPage extends Vue {
   }
 
   created() {
-    Schedule.fetch({ dateString: '2022-04-14' })
+    Schedule.fetch({ dateString: '2022-04-21' })
     setTimeout(() => {
       console.log(this.schedules)
     }, 4000)

@@ -4,6 +4,7 @@ import moment from 'moment'
 import Ware from '~/models/Ware'
 import CostItemOrder from '~/models/CostItemOrder'
 import User from '~/models/User'
+import TechnicianStock from '~/models/TechnicianStock'
 
 export enum Type {
   Labor,
@@ -17,7 +18,7 @@ export enum State {
   Prepared = 'odlozone',
   Mounted = 'zamontowane',
   Sold = 'sprzedane',
-  xxx = 'rozpisane',
+  Fake = 'rozpisane',
   Ordered = 'zamowione',
   Estimate = 'wycena',
   Deposit = 'depozyt',
@@ -46,6 +47,7 @@ export default class CostItem extends Model {
   public ware!: Ware | null
   public orderId!: number
   public order!: CostItemOrder | null
+  public technicianStock!: TechnicianStock | null
   public createdUserId!: number
   public createdUser!: User | null
   public updatedUserId!: number
@@ -67,11 +69,12 @@ export default class CostItem extends Model {
       ware: this.belongsTo(Ware, 'wareId'),
       orderId: this.number(0),
       order: this.belongsTo(CostItemOrder, 'orderId'),
+      typeId: this.attr(null),
       createdUserId: this.number(0),
       createdUser: this.belongsTo(User, 'createdUserId'),
       updatedUserId: this.number(0),
       updatedUser: this.belongsTo(User, 'updatedUserId'),
-      typeId: this.attr(null),
+      technicianStock: this.hasOne(TechnicianStock, 'costItemId'),
       description: this.string(''),
       price: this.number(0),
       quantity: this.number(0),
@@ -94,6 +97,12 @@ export default class CostItem extends Model {
           : null,
         orderId: data.zamowienie_obj_id,
         order: data.zamowienie_obj,
+        technicianStock:
+          data.naszykowana_czesc && data.naszykowana_czesc?.is_naszykowane
+            ? TechnicianStock.apiConfig.dataTransformer({
+                data: data.naszykowana_czesc
+              })
+            : null,
         createdUserId: data.user_id,
         createdUser: data.user,
         updatedUserId: data.updated_user_id,

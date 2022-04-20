@@ -13,6 +13,7 @@ import CostItem from '~/models/CostItem'
 import CostItemOrder from '~/models/CostItemOrder'
 import Photo from '~/models/Photo'
 import PhotoType from '~/models/PhotoType'
+import TechnicianStock from '~/models/TechnicianStock'
 
 const database = new Database()
 
@@ -30,5 +31,6 @@ database.register(CostItem)
 database.register(CostItemOrder)
 database.register(Photo)
 database.register(PhotoType)
+database.register(TechnicianStock)
 
 export default database
