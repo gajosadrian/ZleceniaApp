@@ -45,7 +45,9 @@ export default class Schedule extends Model {
   static fetch({ dateString }: { dateString: string }) {
     const params = { date_string: dateString }
     const queryString = new URLSearchParams(params).toString()
-    return this.api().get('/zlecenia/grafik?' + queryString)
+    return this.api().get('/zlecenia/grafik?' + queryString, {
+      persistBy: 'create'
+    })
   }
 
   get date() {

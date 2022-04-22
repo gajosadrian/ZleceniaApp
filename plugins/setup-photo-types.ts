@@ -15,7 +15,7 @@ const plugin: Plugin = async () => {
         saveTo: 'urzadzenie'
       },
       <PhotoType>{
-        id: Type.Policy,
+        id: Type.Insurance,
         name: 'Polisa',
         saveTo: 'urzadzenie'
       },

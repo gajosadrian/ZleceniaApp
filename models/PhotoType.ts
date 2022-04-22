@@ -3,7 +3,7 @@ import { Model } from '@vuex-orm/core'
 export enum Type {
   Nameplate = 'tabliczka',
   Warranty = 'gwarancja',
-  Policy = 'polisa',
+  Insurance = 'polisa',
   Statement = 'oswiadczenie',
   Receipt = 'dowod_zakupu',
   Device = 'urzadzenie',

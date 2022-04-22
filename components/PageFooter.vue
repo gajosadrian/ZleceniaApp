@@ -15,7 +15,7 @@
 import { Vue, Component } from 'vue-property-decorator'
 
 @Component
-export default class LoginPage extends Vue {
+export default class PageFooter extends Vue {
   get adminTel() {
     return process.env.ADMIN_TEL
   }

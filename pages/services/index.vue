@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-container class="mt-3">
+    <b-container fluid class="mt-3 mb-3">
       <h4>
         Zlecenia:
         <span v-if="schedule && schedule.technician">
@@ -31,7 +31,36 @@
     </b-container>
 
     <div v-if="schedule">
-      {{ [schedule.events.length, processing.fetchingSchedule] }}
+      <div v-for="event in schedule.events" :key="event.id">
+        <div class="mb-2">
+          <div class="small text-right mr-2">
+            <span v-if="event.service && event.service.isCompleted">
+              <span v-if="event.endAt.isBefore()">
+                {{ event.endAt.fromNow() }}
+              </span>
+              <span v-else>przed czasem</span>
+            </span>
+            <span v-else>
+              <span
+                v-if="event.startAt.isBefore() && event.service"
+                class="text-danger"
+              >
+                <b-icon icon="alarm-fill" />
+                {{ event.startAt.fromNow() }}
+              </span>
+              <span v-else>
+                {{ event.startAt.fromNow() }}
+              </span>
+            </span>
+          </div>
+          <div v-if="event.customer" class="bg-white py-2 shadow-sm">
+            <ScheduleEvent :event="event" />
+          </div>
+          <div v-else>
+            <ScheduleEventMessage :event="event" />
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -76,7 +105,7 @@ export default class ServicesIndexPage extends Vue {
       .first()
   }
 
-  created() {
+  mounted() {
     this.fetchSchedule()
   }
 }

@@ -80,12 +80,12 @@ export default class Event extends Model {
     const hours = this.duration.hours()
     const minutes = this.duration.minutes()
     if (minutes === 0) {
-      return `${hours} godz.`
+      return `${hours}h`
     }
     if (hours === 0) {
-      return ` ${minutes} min.`
+      return `0h${minutes}`
     }
-    return `${hours} godz. ${minutes} min.`
+    return `${hours}h${minutes}`
   }
 
   get isAppointment(): boolean {

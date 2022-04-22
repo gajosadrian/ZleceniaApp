@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <b-container>
     <div class="text-center my-4">
       <b-img src="/logo.png" style="width: 65%" />
     </div>
@@ -48,7 +48,7 @@
     <!--        Offline-->
     <!--      </b-button>-->
     <!--    </b-form-group>-->
-  </div>
+  </b-container>
 </template>
 
 <script lang="ts">
