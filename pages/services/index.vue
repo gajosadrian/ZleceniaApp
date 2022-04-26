@@ -9,15 +9,13 @@
       </h4>
       <div class="d-flex justify-content-between">
         <div>
-          <b-button
-            variant="light"
+          <white-button
             :disabled="$nuxt.isOffline || processing.fetchingSchedule"
-            class="border shadow-sm"
             @click="fetchSchedule"
           >
             <b-icon icon="cloud-download" />
             Pobierz zlecenia
-          </b-button>
+          </white-button>
         </div>
         <div>
           <b-input

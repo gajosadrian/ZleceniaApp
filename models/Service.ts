@@ -38,7 +38,7 @@ interface IExpertise {
   dateString: string
 }
 
-interface Note {
+export interface Note {
   idx: number
   type:
     | 'notatka'

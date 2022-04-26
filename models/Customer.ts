@@ -12,6 +12,7 @@ export default class Customer extends Model {
   static entity = 'customers'
 
   public id!: number
+  public symbol!: string
   public name!: string
   public postalCode!: string
   public city!: string
@@ -23,6 +24,7 @@ export default class Customer extends Model {
   static fields() {
     return {
       id: this.number(0),
+      symbol: this.string(''),
       name: this.string(''),
       postalCode: this.string(''),
       city: this.string(''),
@@ -38,6 +40,7 @@ export default class Customer extends Model {
       const data = res.data
       return {
         id: data.id,
+        symbol: data.symbol,
         name: data.nazwa,
         postalCode: data.kod_pocztowy,
         city: data.miasto_short,

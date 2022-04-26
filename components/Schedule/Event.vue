@@ -9,7 +9,7 @@
           {{ event.durationFormatted }}
         </div>
       </div>
-      <div class="pr-2 w-100">
+      <div class="pr-2 w-100" @click="onEventClick">
         <div class="small text-muted">
           <span v-if="service">
             {{ service.kind.nameFormatted }}
@@ -21,14 +21,22 @@
         </div>
         <div v-if="customer">
           <div class="font-weight-bold">
-            {{ _.truncate(customer.name, { length: 25 }) }}
+            <span v-if="customer.satisfaction.id === 0">
+              {{ _.truncate(customer.name, { length: 25 }) }}
+            </span>
+            <span v-else>
+              {{ _.truncate(customer.name, { length: 20 }) }}
+              <i :class="`small text-${customer.satisfaction.color}`">
+                {{ customer.satisfaction.text }}
+              </i>
+            </span>
           </div>
           <div class="small">{{ customer.city }}, {{ customer.street }}</div>
         </div>
         <div v-if="service && service.device">
           <small>
             <b-icon icon="music-player-fill" />
-            {{ service.device.name }}
+            {{ service.device.name }}, {{ service.device.brand }}
           </small>
         </div>
         <div>
@@ -37,8 +45,9 @@
             Zrealizowane
           </small>
           <span v-if="service">
+            <span v-if="service.isCompleted"></span>
             <small
-              v-if="service.hasToClarify"
+              v-else-if="service.hasToClarify"
               class="text-danger font-weight-bold"
             >
               <b-icon icon="exclamation-triangle-fill" />
@@ -76,6 +85,13 @@
               <b-icon icon="exclamation-triangle-fill" />
             </b-button>
             <b-button
+              v-else-if="service.isCompleted"
+              variant="success"
+              disabled
+            >
+              <b-icon icon="check2" />
+            </b-button>
+            <b-button
               v-else-if="service.isInWorkshop"
               variant="warning"
               disabled
@@ -92,13 +108,6 @@
             >
               <b-icon icon="geo-alt-fill" />
             </b-link>
-            <b-button
-              v-else-if="service.isCompleted"
-              variant="success"
-              disabled
-            >
-              <b-icon icon="check2" />
-            </b-button>
           </div>
           <b-button v-else variant="success" disabled>
             <b-icon icon="x" />
@@ -131,6 +140,14 @@ export default class ScheduleEvent extends Vue {
 
   get customer() {
     return this.event.customer
+  }
+
+  onEventClick() {
+    if (!this.service) return
+    this.$router.push({
+      name: 'services-id',
+      params: { id: this.service.id }
+    })
   }
 }
 </script>

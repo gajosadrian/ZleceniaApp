@@ -104,7 +104,8 @@ export default {
     { src: '~/plugins/vuex-orm-axios.ts', mode: 'client' },
     { src: '~/plugins/enums.ts', mode: 'client' },
     { src: '~/plugins/setup-photo-types.ts', mode: 'client' },
-    { src: '~/plugins/lodash.ts', mode: 'client' }
+    { src: '~/plugins/lodash.ts', mode: 'client' },
+    { src: '~/plugins/vue-clipboard.ts', mode: 'client' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
