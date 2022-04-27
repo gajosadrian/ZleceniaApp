@@ -1,5 +1,5 @@
 <template>
-  <b-container>device</b-container>
+  <b-container fluid>device</b-container>
 </template>
 
 <script lang="ts">

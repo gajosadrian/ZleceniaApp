@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-container fluid>
     <div v-if="service">
       <b-badge :variant="service.kind.color">
         {{ service.kind.nameFormatted }}

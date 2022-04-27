@@ -1,7 +1,14 @@
 <template>
   <div>
     <div v-if="service">
-      <ServiceHeader title="Klient" />
+      <ServiceHeader
+        title="Klient"
+        :variant="
+          service.customer && service.customer.satisfaction.id > 0
+            ? service.customer.satisfaction.color
+            : undefined
+        "
+      />
       <ServiceCustomer :customer="service.customer" />
 
       <ServiceHeader title="Zgłoszenie" />
@@ -9,10 +16,11 @@
 
       <ServiceHeader title="Urządzenie" />
       <ServiceHeader title="Opis" />
+      <ServiceDescription :note-groups="service.noteGroups" />
 
       <b-navbar type="dark" variant="danger" fixed="bottom">
         <b-navbar-nav>
-          <b-nav-item href="#">
+          <b-nav-item href="#" active>
             Zlecenie
             <b-badge variant="dark">0</b-badge>
           </b-nav-item>

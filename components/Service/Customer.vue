@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-container fluid>
     <div v-if="customer">
       <div>
         <b-badge>{{ customer.symbol }}</b-badge>
@@ -27,27 +27,21 @@
         </white-button>
       </div>
       <div class="mt-2">
-        <white-button
-          :href="`https://www.google.com/maps/search/?api=1&query=${customer.city}`"
-          class="mr-2"
-        >
+        <white-button :href="customer.googleMapsLink" class="mr-2">
           <b-icon icon="geo-alt-fill" variant="primary" />
           Mapy
         </white-button>
         <white-button
-          href="https://play.google.com/store/apps/details?id=pl.neptis.yanosik.mobi.android&launch=true"
+          :href="customer.yanosikLink"
           class="mr-2"
-          @click="$copyText(customer.city)"
+          @click="$copyText(customer.addressForSearch)"
         >
           <b-icon icon="cursor-fill" variant="danger" />
           Yanosik
         </white-button>
-        <white-button
-          :href="`intent://q=${customer.city}/#Intent;package=pl.aqurat.automapa;scheme=geo;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;end`"
-          class="mr-2"
-        >
+        <white-button :href="customer.autoMapaLink" class="mr-2">
           <b-icon icon="capslock-fill" variant="secondary" />
-          Automapa
+          AutoMapa
         </white-button>
       </div>
     </div>

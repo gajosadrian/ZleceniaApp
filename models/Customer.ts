@@ -17,6 +17,7 @@ export default class Customer extends Model {
   public postalCode!: string
   public city!: string
   public street!: string
+  public addressForSearch!: string
   public phones!: string[]
   public phone!: string
   public satisfaction!: ISatisfaction
@@ -29,6 +30,7 @@ export default class Customer extends Model {
       postalCode: this.string(''),
       city: this.string(''),
       street: this.string(''),
+      addressForSearch: this.string(''),
       phones: this.attr(null),
       phone: this.string(''),
       satisfaction: this.attr(null)
@@ -45,6 +47,7 @@ export default class Customer extends Model {
         postalCode: data.kod_pocztowy,
         city: data.miasto_short,
         street: data.adres,
+        addressForSearch: data.adres_search,
         phones: data.telefony,
         phone: data.telefon,
         satisfaction: <ISatisfaction>{
@@ -56,5 +59,17 @@ export default class Customer extends Model {
         }
       }
     }
+  }
+
+  get googleMapsLink() {
+    return `https://www.google.com/maps/search/?api=1&query=${this.addressForSearch}`
+  }
+
+  get yanosikLink() {
+    return 'https://play.google.com/store/apps/details?id=pl.neptis.yanosik.mobi.android&launch=true'
+  }
+
+  get autoMapaLink() {
+    return `intent://q=${this.addressForSearch}/#Intent;package=pl.aqurat.automapa;scheme=geo;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;end`
   }
 }

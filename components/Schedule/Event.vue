@@ -146,7 +146,7 @@ export default class ScheduleEvent extends Vue {
     if (!this.service) return
     this.$router.push({
       name: 'services-id',
-      params: { id: this.service.id }
+      params: { id: String(this.service.id) }
     })
   }
 }
