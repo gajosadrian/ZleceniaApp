@@ -35,7 +35,7 @@
 
     <Nuxt />
 
-    <b-container>
+    <b-container fluid>
       <PageFooter />
     </b-container>
   </div>

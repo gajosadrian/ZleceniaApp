@@ -14,6 +14,7 @@ import CostItemOrder from '~/models/CostItemOrder'
 import Photo from '~/models/Photo'
 import PhotoType from '~/models/PhotoType'
 import TechnicianStock from '~/models/TechnicianStock'
+import DeviceWarranty from '~/models/DeviceWarranty'
 
 const database = new Database()
 
@@ -25,6 +26,7 @@ database.register(Service)
 database.register(Customer)
 database.register(Technician)
 database.register(Device)
+database.register(DeviceWarranty)
 database.register(User)
 database.register(Ware)
 database.register(CostItem)

@@ -8,7 +8,10 @@
         <span class="font-weight-bold">
           {{ customer.name }}
         </span>
-        <i :class="`small text-${customer.satisfaction.color}`">
+        <i
+          v-if="customer.satisfaction.id > 0"
+          :class="`small text-${customer.satisfaction.color}`"
+        >
           {{ customer.satisfaction.text }}
         </i>
       </div>

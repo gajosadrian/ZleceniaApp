@@ -47,7 +47,7 @@ export default class ServiceDescription extends Vue {
 
   getHtmlContent(content: string) {
     let str = content
-    const startTag = '<span class="bg-warning">'
+    const startTag = '<span class="selected-desc">'
     const endTag = '</span>'
     if (content.includes('>>') && content.includes('<<')) {
       str = _.replace(str, '>>', startTag)
@@ -57,3 +57,9 @@ export default class ServiceDescription extends Vue {
   }
 }
 </script>
+
+<style>
+.selected-desc {
+  background-color: #ffdb93 !important;
+}
+</style>

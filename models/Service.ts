@@ -82,6 +82,7 @@ export default class Service extends Model {
   public isFinished!: boolean
   public isCompleted!: boolean
   public isCostAccepted!: boolean
+  public principal!: string
   public kind!: IKind
   public expertise!: IExpertise | null
   protected lastStatusDate!: string
@@ -116,6 +117,7 @@ export default class Service extends Model {
       isFinished: this.boolean(false),
       isCompleted: this.boolean(false),
       isCostAccepted: this.boolean(false),
+      principal: this.string(''),
       kind: this.attr(null),
       expertise: this.attr(null),
       lastStatusDate: this.string(''),
@@ -155,7 +157,7 @@ export default class Service extends Model {
         hasToClarify: data.is_do_wyjasnienia,
         hasToDeliver: data.is_do_odwiezienia,
         isInWorkshop: data.is_na_warsztacie,
-        isWarranty: data.is_gwaranja,
+        isWarranty: data.is_gwarancja,
         isPaid: data.is_odplatne,
         isInsurance: data.is_ubezpieczenie,
         isSale: data.is_sprzedaz,
@@ -163,6 +165,7 @@ export default class Service extends Model {
         isFinished: data.is_zakonczone,
         isCompleted: data.is_soft_zakonczone,
         isCostAccepted: data.is_akc_kosztow,
+        principal: data.zleceniodawca,
         kind: <IKind>{
           id: data.znacznik.id,
           name: data.znacznik.nazwa,

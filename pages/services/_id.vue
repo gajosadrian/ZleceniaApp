@@ -15,6 +15,8 @@
       <ServiceData :service="service" />
 
       <ServiceHeader title="Urządzenie" />
+      <ServiceDevice :service="service" :device="service.device" />
+
       <ServiceHeader title="Opis" />
       <ServiceDescription :note-groups="service.noteGroups" />
 
