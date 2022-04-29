@@ -21,7 +21,6 @@
           <b-input
             type="date"
             :value="scheduleDateString"
-            :disabled="processing.fetchingSchedule"
             @change="changeDate"
           />
         </div>
