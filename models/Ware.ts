@@ -1,4 +1,5 @@
 import { Model } from '@vuex-orm/core'
+import _ from 'lodash'
 
 export default class Ware extends Model {
   static entity = 'wares'
@@ -58,5 +59,10 @@ export default class Ware extends Model {
 
   get isWare(): boolean {
     return !this.isService
+  }
+
+  get technicianName() {
+    if (!this.symbol.includes('-')) return ''
+    return _.capitalize(_.first(this.symbol.split('-')))
   }
 }

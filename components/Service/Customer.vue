@@ -1,7 +1,7 @@
 <template>
   <b-container fluid>
-    <div v-if="customer">
-      <div>
+    <div v-if="service && customer">
+      <div class="h5 mb-0">
         <b-badge>{{ customer.symbol }}</b-badge>
       </div>
       <div>
@@ -53,10 +53,14 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import Customer from '~/models/Customer'
+import Service from '~/models/Service'
 
 @Component
 export default class ServiceCustomer extends Vue {
-  @Prop({ type: Object }) readonly customer!: Customer | null
+  @Prop({ type: Object }) readonly service!: Service | null
+
+  get customer() {
+    return this.service?.customer
+  }
 }
 </script>

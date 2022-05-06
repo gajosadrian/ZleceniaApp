@@ -9,7 +9,7 @@ import TechnicianStock from '~/models/TechnicianStock'
 export enum Type {
   Labor,
   Delivery,
-  Part,
+  Ware,
   Shipping,
   Settlement
 }
@@ -36,6 +36,13 @@ interface IState {
   icon: string
   color: string
   isVisible: boolean
+}
+
+interface IType {
+  id: Type
+  variant: string | null
+  icon: string | null
+  iconVariant: string | null
 }
 
 export default class CostItem extends Model {
@@ -115,7 +122,7 @@ export default class CostItem extends Model {
           ? Type.Shipping
           : data.is_rozliczenie
           ? Type.Settlement
-          : Type.Part,
+          : Type.Ware,
         description: data.opis,
         price: data.cena,
         quantity: data.ilosc,
@@ -130,6 +137,46 @@ export default class CostItem extends Model {
             }
           : null
       }
+    }
+  }
+
+  get type(): IType {
+    switch (this.typeId) {
+      case Type.Labor:
+        return {
+          id: Type.Labor,
+          variant: 'secondary',
+          icon: 'person',
+          iconVariant: 'primary'
+        }
+      case Type.Delivery:
+        return {
+          id: Type.Labor,
+          variant: 'secondary',
+          icon: 'truck',
+          iconVariant: 'info'
+        }
+      case Type.Ware:
+        return {
+          id: Type.Labor,
+          variant: 'secondary',
+          icon: 'gear',
+          iconVariant: 'secondary'
+        }
+      case Type.Shipping:
+        return {
+          id: Type.Labor,
+          variant: 'secondary',
+          icon: 'truck',
+          iconVariant: 'secondary'
+        }
+      case Type.Settlement:
+        return {
+          id: Type.Labor,
+          variant: 'danger',
+          icon: 'currency-dollar',
+          iconVariant: 'danger'
+        }
     }
   }
 

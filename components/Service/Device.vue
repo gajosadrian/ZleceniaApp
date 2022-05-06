@@ -56,12 +56,14 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import Service from '~/models/Service'
-import Device from '~/models/Device'
 
 @Component
 export default class ServiceDevice extends Vue {
   @Prop({ type: Object }) readonly service!: Service | null
-  @Prop({ type: Object }) readonly device!: Device | null
+
+  get device() {
+    return this.service?.device
+  }
 
   get warrantyPopover() {
     return {

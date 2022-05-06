@@ -9,16 +9,18 @@
             : undefined
         "
       />
-      <ServiceCustomer :customer="service.customer" />
+      <ServiceCustomer :service="service" />
 
       <ServiceHeader title="Zgłoszenie" />
       <ServiceData :service="service" />
 
       <ServiceHeader title="Urządzenie" />
-      <ServiceDevice :service="service" :device="service.device" />
+      <ServiceDevice :service="service" />
 
       <ServiceHeader title="Opis" />
-      <ServiceDescription :note-groups="service.noteGroups" />
+      <ServiceDescription :service="service" />
+
+      <ServiceCostItems :service="service" />
 
       <b-navbar type="dark" variant="danger" fixed="bottom">
         <b-navbar-nav>
