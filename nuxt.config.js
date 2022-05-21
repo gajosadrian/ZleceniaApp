@@ -112,12 +112,11 @@ export default {
   components: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: ['@nuxt/typescript-build', '@nuxtjs/moment'],
+  buildModules: ['@nuxt/typescript-build', '@nuxtjs/dotenv', '@nuxtjs/moment'],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     '@nuxtjs/pwa',
-    '@nuxtjs/dotenv',
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
     'bootstrap-vue/nuxt',
